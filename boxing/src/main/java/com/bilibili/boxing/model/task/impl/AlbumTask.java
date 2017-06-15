@@ -79,7 +79,7 @@ public class AlbumTask {
                     if (!TextUtils.isEmpty(buckId)) {
                         buildAlbumCover(cr, buckId, album);
                     }
-                } while (bucketCursor.moveToNext());
+                } while (bucketCursor.moveToNext() && !bucketCursor.isLast());
             }
         } finally {
             if (bucketCursor != null) {
@@ -96,7 +96,12 @@ public class AlbumTask {
     private void buildAlbumCover(ContentResolver cr, String buckId, AlbumEntity album) {
         String[] photoColumn = new String[]{Media._ID, Media.DATA};
         boolean isNeedGif = mPickerConfig != null && mPickerConfig.isNeedGif();
+
         String selectionId = isNeedGif ? SELECTION_ID : SELECTION_ID_WITHOUT_GIF;
+        if (mPickerConfig != null && mPickerConfig.getMediaFileterSel() != null) {
+            selectionId += " and " + mPickerConfig.getMediaFileterSel();
+        }
+
         String[] args = isNeedGif ? SELECTION_ARGS_IMAGE_MIME_TYPE : SELECTION_ARGS_IMAGE_MIME_TYPE_WITHOUT_GIF;
         String[] selectionArgs = new String[args.length + 1];
         selectionArgs[0] = buckId;

@@ -38,6 +38,7 @@ import com.bilibili.boxing.demo.R;
 import com.bilibili.boxing.model.BoxingManager;
 import com.bilibili.boxing.model.config.BoxingConfig;
 import com.bilibili.boxing.model.config.BoxingCropOption;
+import com.bilibili.boxing.model.config.MediaFilter;
 import com.bilibili.boxing.model.entity.BaseMedia;
 import com.bilibili.boxing.model.entity.impl.ImageMedia;
 import com.bilibili.boxing.utils.BoxingFileHelper;
@@ -99,7 +100,9 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.single_image_btn:
-                BoxingConfig singleImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG).withMediaPlaceHolderRes(R.drawable.ic_boxing_default_image);
+                BoxingConfig singleImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG)
+                        .mediaFilter(new MediaFilter(800, 800))
+                        .withMediaPlaceHolderRes(R.drawable.ic_boxing_default_image);
                 Boxing.of(singleImgConfig).withIntent(this, BoxingActivity.class).start(this, COMPRESS_REQUEST_CODE);
                 break;
             case R.id.single_image_btn_crop_btn:
