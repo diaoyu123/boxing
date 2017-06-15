@@ -45,17 +45,24 @@ public class BoxingUcrop implements IBoxingCrop {
                 .scheme("file")
                 .appendPath(path)
                 .build();
+        UCrop.Options crop = new UCrop.Options();
 
-        String fileSuffix = path.substring(path.lastIndexOf("."), path.length());
-        Uri destUri = cropConfig.getDestination();
-        if (destUri == null) {
-            destUri =  new Uri.Builder()
+        Uri destUri;
+        String fileSuffix;
+        if (cropConfig.getDestination() != null) {
+            destUri = cropConfig.getDestination();
+            String destPath = destUri.getPath();
+            fileSuffix = destPath.substring(destPath.lastIndexOf("."), destPath.length());
+        } else {
+            // generate default uri
+            fileSuffix = path.substring(path.lastIndexOf("."), path.length());
+            destUri = new Uri.Builder()
                     .scheme("file")
                     .appendPath(BoxingFileHelper.getCacheDir(context))
                     .appendPath(String.format(Locale.US, "%s" + fileSuffix, System.currentTimeMillis()))
                     .build();
         }
-        UCrop.Options crop = new UCrop.Options();
+
         // do not copy exif information to crop pictures
         // because png do not have exif and png is not Distinguishable
         if (".png".equalsIgnoreCase(fileSuffix)) {
