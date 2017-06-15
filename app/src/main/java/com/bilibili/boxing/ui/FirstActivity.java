@@ -106,22 +106,18 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
                 Boxing.of(singleImgConfig).withIntent(this, BoxingActivity.class).start(this, COMPRESS_REQUEST_CODE);
                 break;
             case R.id.single_image_btn_crop_btn:
-                String cachePath = BoxingFileHelper.getCacheDir(this);
-                if (TextUtils.isEmpty(cachePath)) {
+                if (TextUtils.isEmpty(BoxingFileHelper.getCacheDir(this))) {
                     Toast.makeText(getApplicationContext(), R.string.boxing_storage_deny, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Uri destUri = new Uri.Builder()
-                        .scheme("file")
-                        .appendPath(cachePath)
-                        .appendPath(String.format(Locale.US, "%s.jpg", System.currentTimeMillis()))
-                        .build();
-                BoxingConfig singleCropImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG).withCropOption(new BoxingCropOption(destUri))
+                BoxingConfig singleCropImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG)
+                        .withCropOption(new BoxingCropOption())
                         .withMediaPlaceHolderRes(R.drawable.ic_boxing_default_image);
                 Boxing.of(singleCropImgConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_CODE);
                 break;
             case R.id.multi_image_btn:
-                BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG).needCamera(R.drawable.ic_boxing_camera_white).needGif();
+                BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG)
+                        .needCamera(R.drawable.ic_boxing_camera_white).needGif();
                 Boxing.of(config).withIntent(this, BoxingActivity.class).start(this, REQUEST_CODE);
                 break;
             case R.id.video_btn:

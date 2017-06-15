@@ -34,6 +34,10 @@ public class BoxingCropOption implements Parcelable {
     private int mMaxWidth;
     private int mMaxHeight;
 
+    public BoxingCropOption() {
+
+    }
+
     public BoxingCropOption(Uri destination) {
         this.mDestination = destination;
     }
