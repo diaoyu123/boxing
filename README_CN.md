@@ -1,6 +1,6 @@
 ## boxing
 ---
-基于MVP模式的Android多媒体选择器。[![Build Status](https://travis-ci.org/Bilibili/boxing.svg?branch=master)](https://travis-ci.org/Bilibili/boxing)
+基于MVP模式的Android多媒体选择器。[![](https://jitpack.io/v/diaoyu123/boxing.svg)](https://jitpack.io/#diaoyu123/boxing)
 
 #### boxing Inside: 
 [![bili](screenshot/bili.webp)](https://play.google.com/store/apps/details?id=tv.danmaku.bili)
@@ -18,34 +18,58 @@
 核心版本：只包含核心功能。
 实现版本：在核心功能之上添加了实现界面。                                                                                       
 - Maven 
-  ​                                                  
-  核心版本                                                                                                                                            
+
 ```xml
-<dependency>                                                      
-  	<groupId>com.bilibili</groupId>                                    
-  	<artifactId>boxing</artifactId>                                    
-  	<version>0.7.5</version>                                       
-  	<type>pom</type>                                                
-</dependency> 
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+  ​
+核心版本
+
+```xml
+<dependency>
+    <groupId>com.github.diaoyu123.boxing</groupId>
+    <artifactId>boxing</artifactId>
+    <version>0.7.7</version>
+</dependency>
+
 ```
 实现版本                                                                   
+
 ```xml
-<dependency>                                                          
-  	<groupId>com.bilibili</groupId>                                    
-  	<artifactId>boxing-impl</artifactId>                              
-  	<version>0.7.5</version>                                       
-  	<type>pom</type>                                                  
-</dependency>                                                      
+<dependency>
+    <groupId>com.github.diaoyu123.boxing</groupId>
+    <artifactId>boxing-impl</artifactId>
+    <version>0.7.7</version>
+</dependency>
 ```
-- Gradle   
-  ​                                                    
-  核心版本                                                                 
-```java                                                                         
-compile 'com.bilibili:boxing:0.7.5'                              
+
+- Gradle
+
+Add it in your root build.gradle at the end of repositories:
+
 ```
-实现版本                                                                   
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+核心版本
+
+```java
+compile 'com.github.diaoyu123.boxing:boxing:0.7.7'
+```
+
+实现版本
 ```java                                                                        
-compile 'com.bilibili:boxing-impl:0.7.5'               
+compile 'com.github.diaoyu123.boxing:boxing-impl:0.7.7'
 ```
 
 ### 预览图
@@ -74,6 +98,7 @@ config.needCamera(cameraRes).needGif().withMaxCount(9); // 支持gif，相机，
 .withMediaPlaceHolderRes(resInt) // 设置默认图片占位图，默认无
 .withAlbumPlaceHolderRes(resInt) // 设置默认相册占位图，默认无
 .withVideoDurationRes(resInt) // 视频模式下，时长的图标，默认无
+.mediaFilter(filter) // 图片尺寸过滤
 ```
 - 初始化Boxing，构造Intent并启动
 ```java

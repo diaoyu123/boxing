@@ -1,6 +1,6 @@
 ## boxing
 ---
-Android multi-media selector based on MVP mode.[中文文档](README_CN.md)  [![Build Status](https://travis-ci.org/Bilibili/boxing.svg?branch=master)](https://travis-ci.org/Bilibili/boxing)
+Android multi-media selector based on MVP mode.[中文文档](README_CN.md)  [![](https://jitpack.io/v/diaoyu123/boxing.svg)](https://jitpack.io/#diaoyu123/boxing)
 
 #### boxing Inside: 
 [![bili](screenshot/bili.webp)](https://play.google.com/store/apps/details?id=tv.danmaku.bili)
@@ -21,38 +21,59 @@ UI version: contain UI implements base on core version.
 
 - Maven
 
+Add the JitPack repository to your build file
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
 Core version
 
 ```xml
-<dependency>                       
-  	<groupId>com.bilibili</groupId>  
-  	<artifactId>boxing</artifactId>  
-  	<version>0.7.5</version>
-  	<type>pom</type>                
-</dependency>                      		
+<dependency>
+    <groupId>com.github.diaoyu123.boxing</groupId>
+    <artifactId>boxing-impl</artifactId>
+    <version>0.7.7</version>
+</dependency>
 ```
 
 UI version
 
 ```xml
-<dependency>                          
-  	<groupId>com.bilibili</groupId>     
-  	<artifactId>boxing-impl</artifactId>
-  	<version>0.7.5</version>   
-  	<type>pom</type>                    
-</dependency>                         
+<dependency>
+    <groupId>com.github.diaoyu123.boxing</groupId>
+    <artifactId>boxing-impl</artifactId>
+    <version>0.7.7</version>
+</dependency>
 ```
 
 - Gradle
 
-Core version              
+Add it in your root build.gradle at the end of repositories:
+
 ```java
-compile 'com.bilibili:boxing:0.7.5'
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+Core version
+
+```java
+compile 'com.github.diaoyu123.boxing:boxing:0.7.7'
 ```
 
 UI version
 ```java
-compile 'com.bilibili:boxing-impl:0.7.5'
+compile 'com.github.diaoyu123.boxing:boxing-impl:0.7.7'
 ```
 
 ### Preview
@@ -80,6 +101,7 @@ config.needCamera(cameraRes).needGif().withMaxCount(9) // camera, gif support, s
 .withMediaPlaceHolderRes(resInt) // set the image placeholder, default 0
 .withAlbumPlaceHolderRes(resInt) // set the album placeholder, default 0
 .withVideoDurationRes(resInt) // set the video duration resource in video mode, default 0
+.mediaFilter(filter) // set the image size filter
 ```
 - Get Boxing, set Intent and call start
 ```java
