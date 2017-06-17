@@ -100,7 +100,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
 
     @Override
     public void startLoading() {
-        if (mIsOnlyCamera) {
+        if (mIsOnlyUseCamera) {
             startCarema();
         } else {
             loadMedias();
@@ -147,7 +147,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
         mRecycleView = (RecyclerView) view.findViewById(R.id.media_recycleview);
 
         // use camera only, hide multi picker setting
-        if (mIsOnlyCamera) {
+        if (mIsOnlyUseCamera) {
             view.findViewById(R.id.multi_picker_layout).setVisibility(View.GONE);
             return;
         }
@@ -269,7 +269,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
         mIsCamera = false;
         dismissProgressDialog();
 
-        if (mIsOnlyCamera) {
+        if (mIsOnlyUseCamera) {
             getActivity().finish();
         }
     }

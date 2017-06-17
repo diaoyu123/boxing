@@ -64,7 +64,7 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
     private PickerContract.Presenter mPresenter;
     private CameraPickerHelper mCameraPicker;
     private Boxing.OnBoxingFinishListener mOnFinishListener;
-    protected boolean mIsOnlyCamera;
+    protected boolean mIsOnlyUseCamera;
 
     /**
      * start loading when the permission request is completed.
@@ -149,7 +149,10 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
         setPickerConfig(config);
         onCreateWithSelectedMedias(savedInstanceState, parseSelectedMedias(savedInstanceState, getArguments()));
         super.onCreate(savedInstanceState);
-        mIsOnlyCamera = getArguments().getBoolean(Boxing.EXTRA_ONLY_CAMREA);
+
+        if (getArguments() != null) {
+            mIsOnlyUseCamera = getArguments().getBoolean(Boxing.EXTRA_ONLY_CAMREA);
+        }
         initCameraPhotoPicker(savedInstanceState);
     }
 
@@ -166,7 +169,7 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
 
     private void initCameraPhotoPicker(Bundle savedInstanceState) {
         BoxingConfig config = BoxingManager.getInstance().getBoxingConfig();
-        if (mIsOnlyCamera || (config != null && config.isNeedCamera())) {
+        if (mIsOnlyUseCamera || (config != null && config.isNeedCamera())) {
             mCameraPicker = new CameraPickerHelper(savedInstanceState);
             mCameraPicker.setPickCallback(new CameraListener(this));
         }

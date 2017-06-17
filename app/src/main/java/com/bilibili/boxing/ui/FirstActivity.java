@@ -111,7 +111,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
                 // singleImageCropWithDefaultUri();
             break;
             case R.id.camera_btn:
-                Boxing.get().withIntent(this, BoxingActivity.class).startCamera(this, REQUEST_CODE);
+                Boxing.ofCamera().withIntent(this, BoxingActivity.class).startCamera(this, REQUEST_CODE);
                 break;
             case R.id.multi_image_btn:
             BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG)

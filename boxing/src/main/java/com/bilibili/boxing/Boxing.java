@@ -111,6 +111,14 @@ public class Boxing {
     }
 
     /**
+     * create a boxing entry. use {@link BoxingConfig.Mode#CAMERA}.
+     */
+    public static Boxing ofCamera() {
+        BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.CAMERA);
+        return new Boxing(config);
+    }
+
+    /**
      * get the intent build by boxing after call {@link #withIntent}.
      */
     public Intent getIntent() {

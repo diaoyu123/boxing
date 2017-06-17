@@ -53,7 +53,7 @@ public class BoxingConfig implements Parcelable {
     private int mMaxCount = DEFAULT_SELECTED_COUNT;
 
     public enum Mode {
-        SINGLE_IMG, MULTI_IMG, VIDEO
+        SINGLE_IMG, MULTI_IMG, VIDEO, CAMERA
     }
 
     public enum ViewMode {
