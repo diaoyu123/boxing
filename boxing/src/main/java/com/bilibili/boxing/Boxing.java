@@ -48,6 +48,7 @@ import java.util.List;
 public class Boxing {
     public static final String EXTRA_SELECTED_MEDIA = "com.bilibili.boxing.Boxing.selected_media";
     public static final String EXTRA_ALBUM_ID = "com.bilibili.boxing.Boxing.album_id";
+    public static final String EXTRA_ONLY_CAMREA = "com.bilibili.boxing.Boxing.only_camera_id";
 
     static final String EXTRA_CONFIG = "com.bilibili.boxing.Boxing.config";
     static final String EXTRA_RESULT = "com.bilibili.boxing.Boxing.result";
@@ -196,6 +197,16 @@ public class Boxing {
      * same as {@link Fragment#startActivityForResult(Intent, int, Bundle)}
      */
     public void start(@NonNull Fragment fragment, int requestCode) {
+        fragment.startActivityForResult(mIntent, requestCode);
+    }
+
+    public void startCamera(@NonNull Activity activity, int requestCode) {
+        mIntent.putExtra(EXTRA_ONLY_CAMREA, true);
+        activity.startActivityForResult(mIntent, requestCode);
+    }
+
+    public void startCamera(@NonNull Fragment fragment, int requestCode) {
+        mIntent.putExtra(EXTRA_ONLY_CAMREA, true);
         fragment.startActivityForResult(mIntent, requestCode);
     }
 

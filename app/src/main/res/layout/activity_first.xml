@@ -94,6 +94,19 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/camera_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/boxing_activity_horizontal_margin"
+        android:layout_marginRight="@dimen/boxing_activity_horizontal_margin"
+        android:layout_marginTop="@dimen/boxing_activity_vertical_margin"
+        android:background="@drawable/rect_color_primary"
+        android:gravity="center"
+        android:padding="@dimen/boxing_item_spacing"
+        android:text="@string/start_camera"
+        android:textColor="@color/boxing_colorPrimaryDark"/>
+
+    <TextView
         android:id="@+id/outside_bs_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

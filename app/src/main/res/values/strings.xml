@@ -22,6 +22,7 @@
     <string name="first_demo_title">自定义Activity</string>
     <string name="second_demo">2.使用自定义Fragment</string>
     <string name="second_demo_title">自定义Fragment</string>
+    <string name="start_camera">启动相机</string>
     <string name="bottom_sheet">Bottom Sheet</string>
 
     <string name="menu_fresco">Fresco</string>

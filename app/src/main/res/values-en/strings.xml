@@ -22,5 +22,6 @@
     <string name="second_demo">2.use Custom Fragment</string>
     <string name="second_demo_title">Custom Fragment</string>
     <string name="first_demo_title">Custom Activity</string>
+    <string name="start_camera">Start Camera</string>
     <string name="bottom_sheet">Bottom Sheet</string>
 </resources>

@@ -113,7 +113,11 @@ Boxing.of(config).withIntent(context, BoxingViewActivity.class).start(callerActi
   	
 // call of() use Mode.MULTI_IMG by default.
 Boxing.of().withIntent(context, class).start(callerActivity, REQUEST_CODE);
+
+// use camera only
+Boxing.get().withIntent(this, BoxingActivity.class).startCamera(this, REQUEST_CODE);
 ```
+
 - Get Result
 ```java
 @Override

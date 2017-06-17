@@ -110,6 +110,9 @@ Boxing.of(config).withIntent(context, BoxingViewActivity.class).start(callerActi
 
 // 调用of方法默认使用Mode.MULTI_IMG
 Boxing.of().withIntent(context, class).start(callerActivity, REQUEST_CODE);
+
+// 调用相机
+Boxing.get().withIntent(this, BoxingActivity.class).startCamera(this, REQUEST_CODE);
 ```
 
 - 取结果

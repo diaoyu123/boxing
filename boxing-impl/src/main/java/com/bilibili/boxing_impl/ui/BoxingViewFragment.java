@@ -100,8 +100,12 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
 
     @Override
     public void startLoading() {
-        loadMedias();
-        loadAlbum();
+        if (mIsOnlyCamera) {
+            startCarema();
+        } else {
+            loadMedias();
+            loadAlbum();
+        }
     }
 
     @Override
@@ -139,10 +143,15 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
 
     private void initViews(View view) {
         mEmptyTxt = (TextView) view.findViewById(R.id.empty_txt);
-        mRecycleView = (RecyclerView) view.findViewById(R.id.media_recycleview);
         mLoadingView = (ProgressBar) view.findViewById(R.id.loading);
-        initRecycleView();
+        mRecycleView = (RecyclerView) view.findViewById(R.id.media_recycleview);
 
+        // use camera only, hide multi picker setting
+        if (mIsOnlyCamera) {
+            view.findViewById(R.id.multi_picker_layout).setVisibility(View.GONE);
+            return;
+        }
+        initRecycleView();
         boolean isMultiImageMode = BoxingManager.getInstance().getBoxingConfig().isMultiImageMode();
         View multiImageLayout = view.findViewById(R.id.multi_picker_layout);
         multiImageLayout.setVisibility(isMultiImageMode ? View.VISIBLE : View.GONE);
@@ -259,6 +268,10 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
     public void onCameraError() {
         mIsCamera = false;
         dismissProgressDialog();
+
+        if (mIsOnlyCamera) {
+            getActivity().finish();
+        }
     }
 
     @Override
@@ -456,10 +469,14 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
 
         @Override
         public void onClick(View v) {
-            if (!mIsCamera) {
-                mIsCamera = true;
-                startCamera(getActivity(), BoxingViewFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
-            }
+            startCarema();
+        }
+    }
+
+    private void startCarema() {
+        if (!mIsCamera) {
+            mIsCamera = true;
+            startCamera(getActivity(), BoxingViewFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
         }
     }
 

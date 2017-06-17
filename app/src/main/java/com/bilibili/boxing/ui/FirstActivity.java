@@ -74,6 +74,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.multi_image_btn).setOnClickListener(this);
         findViewById(R.id.video_btn).setOnClickListener(this);
         findViewById(R.id.outside_bs_btn).setOnClickListener(this);
+        findViewById(R.id.camera_btn).setOnClickListener(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.media_recycle_view);
         mAdapter = new MediaResultAdapter();
@@ -106,29 +107,32 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
                 Boxing.of(singleImgConfig).withIntent(this, BoxingActivity.class).start(this, COMPRESS_REQUEST_CODE);
                 break;
             case R.id.single_image_btn_crop_btn:
-                singleCropWithDestUri();
-                // singleCropWithDefaultUri();
+                singleImageCropWithDestUri();
+                // singleImageCropWithDefaultUri();
+            break;
+            case R.id.camera_btn:
+                Boxing.get().withIntent(this, BoxingActivity.class).startCamera(this, REQUEST_CODE);
                 break;
             case R.id.multi_image_btn:
-                BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG)
+            BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG)
                         .needCamera(R.drawable.ic_boxing_camera_white).needGif();
-                Boxing.of(config).withIntent(this, BoxingActivity.class).start(this, REQUEST_CODE);
-                break;
+            Boxing.of(config).withIntent(this, BoxingActivity.class).start(this, REQUEST_CODE);
+            break;
             case R.id.video_btn:
-                BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).withVideoDurationRes(R.drawable.ic_boxing_play);
-                Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_CODE);
-                break;
+            BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).withVideoDurationRes(R.drawable.ic_boxing_play);
+            Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_CODE);
+            break;
             case R.id.outside_bs_btn:
-                BoxingConfig bsConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG);
-                Boxing.of(bsConfig).withIntent(this, BoxingBottomSheetActivity.class).start(this, REQUEST_CODE);
-                break;
+            BoxingConfig bsConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG);
+            Boxing.of(bsConfig).withIntent(this, BoxingBottomSheetActivity.class).start(this, REQUEST_CODE);
+            break;
 
             default:
                 break;
         }
     }
 
-    private void singleCropWithDestUri() {
+    private void singleImageCropWithDestUri() {
         String cachePath = BoxingFileHelper.getCacheDir(this);
         if (TextUtils.isEmpty(cachePath)) {
             Toast.makeText(getApplicationContext(), R.string.boxing_storage_deny, Toast.LENGTH_SHORT).show();
@@ -145,7 +149,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         Boxing.of(singleCropImgConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_CODE);
     }
 
-    private void singleCropWithDefaultUri() {
+    private void singleImageCropWithDefaultUri() {
         if (TextUtils.isEmpty(BoxingFileHelper.getCacheDir(this))) {
             Toast.makeText(getApplicationContext(), R.string.boxing_storage_deny, Toast.LENGTH_SHORT).show();
             return;

@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.bilibili.boxing.AbsBoxingActivity;
 import com.bilibili.boxing.AbsBoxingViewFragment;
+import com.bilibili.boxing.Boxing;
 import com.bilibili.boxing.model.config.BoxingConfig;
 import com.bilibili.boxing.model.entity.BaseMedia;
 import com.bilibili.boxing_impl.R;
@@ -46,8 +47,14 @@ public class BoxingActivity extends AbsBoxingActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boxing);
+
         createToolbar();
-        setTitleTxt(getBoxingConfig());
+        // use camera only, hide pick album setting
+        if (getIntent().getBooleanExtra(Boxing.EXTRA_ONLY_CAMREA, false)) {
+            findViewById(R.id.pick_album_txt).setVisibility(View.GONE);
+        } else {
+            setTitleTxt(getBoxingConfig());
+        }
     }
 
     @NonNull
@@ -57,6 +64,10 @@ public class BoxingActivity extends AbsBoxingActivity {
         if (mPickerFragment == null) {
             mPickerFragment = (BoxingViewFragment) BoxingViewFragment.newInstance().setSelectedBundle(medias);
             getSupportFragmentManager().beginTransaction().replace(R.id.content_layout, mPickerFragment, BoxingViewFragment.TAG).commit();
+        }
+        if (mPickerFragment.getArguments() != null) {
+            mPickerFragment.getArguments().putBoolean(Boxing.EXTRA_ONLY_CAMREA,
+                    getIntent().getBooleanExtra(Boxing.EXTRA_ONLY_CAMREA, false));
         }
         return mPickerFragment;
     }
