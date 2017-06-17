@@ -19,7 +19,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group = "com.github.diaoyu123"
-version = "0.7.6"
 
 android {
     compileSdkVersion 25
