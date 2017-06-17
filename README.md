@@ -38,7 +38,7 @@ Core version
 <dependency>
     <groupId>com.github.diaoyu123.boxing</groupId>
     <artifactId>boxing-impl</artifactId>
-    <version>0.7.7</version>
+    <version>0.7.9</version>
 </dependency>
 ```
 
@@ -48,7 +48,7 @@ UI version
 <dependency>
     <groupId>com.github.diaoyu123.boxing</groupId>
     <artifactId>boxing-impl</artifactId>
-    <version>0.7.7</version>
+    <version>0.7.9</version>
 </dependency>
 ```
 
@@ -68,12 +68,12 @@ allprojects {
 Core version
 
 ```java
-compile 'com.github.diaoyu123.boxing:boxing:0.7.7'
+compile 'com.github.diaoyu123.boxing:boxing:0.7.9'
 ```
 
 UI version
 ```java
-compile 'com.github.diaoyu123.boxing:boxing-impl:0.7.7'
+compile 'com.github.diaoyu123.boxing:boxing-impl:0.7.9'
 ```
 
 ### Preview
@@ -115,7 +115,7 @@ Boxing.of(config).withIntent(context, BoxingViewActivity.class).start(callerActi
 Boxing.of().withIntent(context, class).start(callerActivity, REQUEST_CODE);
 
 // use camera only
-Boxing.get().withIntent(this, BoxingActivity.class).startCamera(this, REQUEST_CODE);
+Boxing.ofCamera().withIntent(this, BoxingActivity.class).startCamera(this, REQUEST_CODE);
 ```
 
 - Get Result

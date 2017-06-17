@@ -34,7 +34,7 @@
 <dependency>
     <groupId>com.github.diaoyu123.boxing</groupId>
     <artifactId>boxing</artifactId>
-    <version>0.7.7</version>
+    <version>0.7.9</version>
 </dependency>
 
 ```
@@ -44,7 +44,7 @@
 <dependency>
     <groupId>com.github.diaoyu123.boxing</groupId>
     <artifactId>boxing-impl</artifactId>
-    <version>0.7.7</version>
+    <version>0.7.9</version>
 </dependency>
 ```
 
@@ -64,12 +64,12 @@ allprojects {
 核心版本
 
 ```java
-compile 'com.github.diaoyu123.boxing:boxing:0.7.7'
+compile 'com.github.diaoyu123.boxing:boxing:0.7.9'
 ```
 
 实现版本
 ```java                                                                        
-compile 'com.github.diaoyu123.boxing:boxing-impl:0.7.7'
+compile 'com.github.diaoyu123.boxing:boxing-impl:0.7.9'
 ```
 
 ### 预览图
@@ -112,7 +112,7 @@ Boxing.of(config).withIntent(context, BoxingViewActivity.class).start(callerActi
 Boxing.of().withIntent(context, class).start(callerActivity, REQUEST_CODE);
 
 // 调用相机
-Boxing.get().withIntent(this, BoxingActivity.class).startCamera(this, REQUEST_CODE);
+Boxing.ofCamera().withIntent(this, BoxingActivity.class).startCamera(this, REQUEST_CODE);
 ```
 
 - 取结果
