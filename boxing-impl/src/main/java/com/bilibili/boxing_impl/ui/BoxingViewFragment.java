@@ -50,6 +50,7 @@ import com.bilibili.boxing_impl.R;
 import com.bilibili.boxing_impl.WindowManagerHelper;
 import com.bilibili.boxing_impl.adapter.BoxingAlbumAdapter;
 import com.bilibili.boxing_impl.adapter.BoxingMediaAdapter;
+import com.bilibili.boxing_impl.view.HackyGridLayoutManager;
 import com.bilibili.boxing_impl.view.MediaItemLayout;
 import com.bilibili.boxing_impl.view.SpacesItemDecoration;
 
@@ -100,12 +101,8 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
 
     @Override
     public void startLoading() {
-        if (mIsOnlyUseCamera) {
-            startCarema();
-        } else {
-            loadMedias();
-            loadAlbum();
-        }
+        loadMedias();
+        loadAlbum();
     }
 
     @Override
@@ -143,15 +140,11 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
 
     private void initViews(View view) {
         mEmptyTxt = (TextView) view.findViewById(R.id.empty_txt);
-        mLoadingView = (ProgressBar) view.findViewById(R.id.loading);
         mRecycleView = (RecyclerView) view.findViewById(R.id.media_recycleview);
-
-        // use camera only, hide multi picker setting
-        if (mIsOnlyUseCamera) {
-            view.findViewById(R.id.multi_picker_layout).setVisibility(View.GONE);
-            return;
-        }
+        mRecycleView.setHasFixedSize(true);
+        mLoadingView = (ProgressBar) view.findViewById(R.id.loading);
         initRecycleView();
+
         boolean isMultiImageMode = BoxingManager.getInstance().getBoxingConfig().isMultiImageMode();
         View multiImageLayout = view.findViewById(R.id.multi_picker_layout);
         multiImageLayout.setVisibility(isMultiImageMode ? View.VISIBLE : View.GONE);
@@ -166,7 +159,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
     }
 
     private void initRecycleView() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), GRID_COUNT);
+        GridLayoutManager gridLayoutManager = new HackyGridLayoutManager(getActivity(), GRID_COUNT);
         gridLayoutManager.setSmoothScrollbarEnabled(true);
         mRecycleView.setLayoutManager(gridLayoutManager);
         mRecycleView.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelOffset(R.dimen.boxing_media_margin), GRID_COUNT));
@@ -268,10 +261,6 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
     public void onCameraError() {
         mIsCamera = false;
         dismissProgressDialog();
-
-        if (mIsOnlyUseCamera) {
-            getActivity().finish();
-        }
     }
 
     @Override
@@ -304,7 +293,6 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
             onViewActivityRequest(selectedMedias, mMediaAdapter.getAllMedias(), isBackClick);
             if (isBackClick) {
                 mMediaAdapter.setSelectedMedias(selectedMedias);
-                mMediaAdapter.notifyDataSetChanged();
             }
             updateMultiPickerLayoutState(selectedMedias);
         }
@@ -332,9 +320,9 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
             mDialog.setIndeterminate(true);
             mDialog.setMessage(getString(R.string.boxing_handling));
         }
-       if (!mDialog.isShowing()) {
-           mDialog.show();
-       }
+        if (!mDialog.isShowing()) {
+            mDialog.show();
+        }
     }
 
     private void dismissProgressDialog() {
@@ -469,14 +457,10 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
 
         @Override
         public void onClick(View v) {
-            startCarema();
-        }
-    }
-
-    private void startCarema() {
-        if (!mIsCamera) {
-            mIsCamera = true;
-            startCamera(getActivity(), BoxingViewFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
+            if (!mIsCamera) {
+                mIsCamera = true;
+                startCamera(getActivity(), BoxingViewFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
+            }
         }
     }
 

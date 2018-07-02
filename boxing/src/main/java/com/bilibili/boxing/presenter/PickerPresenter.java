@@ -63,6 +63,7 @@ public class PickerPresenter implements PickerContract.Presenter {
         mCurrentAlbumId = albumId;
         if (page == 0) {
             mTasksView.clearMedia();
+            mCurrentPage = 0;
         }
         ContentResolver cr = mTasksView.getAppCr();
         BoxingManager.getInstance().loadMedia(cr, page, albumId, mLoadMediaCallback);
@@ -98,8 +99,7 @@ public class PickerPresenter implements PickerContract.Presenter {
 
     @Override
     public void checkSelectedMedia(List<BaseMedia> allMedias, List<BaseMedia> selectedMedias) {
-        if (allMedias == null || allMedias.size() == 0
-                || selectedMedias == null || selectedMedias.size() == 0) {
+        if (allMedias == null || allMedias.size() == 0) {
             return;
         }
         Map<String, ImageMedia> map = new HashMap<>(allMedias.size());
@@ -111,13 +111,14 @@ public class PickerPresenter implements PickerContract.Presenter {
             media.setSelected(false);
             map.put(media.getPath(), media);
         }
+        if (selectedMedias == null || selectedMedias.size() < 0) {
+            return;
+        }
         for (BaseMedia media : selectedMedias) {
             if (map.containsKey(media.getPath())) {
                 map.get(media.getPath()).setSelected(true);
             }
         }
-        map = null;
-
     }
 
     private static class LoadMediaCallback implements IMediaTaskCallback<BaseMedia> {
