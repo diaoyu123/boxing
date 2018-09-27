@@ -51,7 +51,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api "com.android.support:design:${rootProject.ext.androidSupportLibraryVersion}"
-    implementation('com.chensl.rotatephotoview:rotatephotoview:1.0.5') {
+    api('com.chensl.rotatephotoview:rotatephotoview:1.0.5') {
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude module: 'recyclerview-v7'
