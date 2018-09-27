@@ -38,6 +38,9 @@ public class VideoMedia extends BaseMedia {
     private String mDateTaken;
     private String mMimeType;
 
+    private String mWidth;
+    private String mHeight;
+
     private VideoMedia() {
     }
 
@@ -53,6 +56,16 @@ public class VideoMedia extends BaseMedia {
         this.mSize = builder.mSize;
         this.mDateTaken = builder.mDateTaken;
         this.mMimeType = builder.mMimeType;
+        this.mWidth = builder.mWidth;
+        this.mHeight = builder.mHeight;
+    }
+
+    public long getLongDuration() {
+        try {
+            return Long.parseLong(mDuration);
+        } catch (NumberFormatException e) {
+            return 0L;
+        }
     }
 
     public String getDuration() {
@@ -115,6 +128,22 @@ public class VideoMedia extends BaseMedia {
         return mMimeType;
     }
 
+    public int getWidth() {
+        try {
+            return Integer.parseInt(mWidth);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    public int getHeight() {
+        try {
+            return Integer.parseInt(mHeight);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
     public static class Builder {
         private String mId;
         private String mTitle;
@@ -123,6 +152,8 @@ public class VideoMedia extends BaseMedia {
         private String mSize;
         private String mDateTaken;
         private String mMimeType;
+        private String mWidth;
+        private String mHeight;
 
         public Builder(String id, String path) {
             this.mId = id;
@@ -154,6 +185,15 @@ public class VideoMedia extends BaseMedia {
             return this;
         }
 
+        public Builder setWidth(String width) {
+            this.mWidth = width;
+            return this;
+        }
+
+        public Builder setHeight(String height) {
+            this.mHeight = height;
+            return this;
+        }
 
         public VideoMedia build() {
             return new VideoMedia(this);
