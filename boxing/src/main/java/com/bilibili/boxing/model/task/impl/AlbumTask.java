@@ -32,6 +32,8 @@ import com.bilibili.boxing.model.entity.impl.ImageMedia;
 import com.bilibili.boxing.utils.BoxingExecutor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -69,17 +71,27 @@ public class AlbumTask {
         String[] distinctBucketColumns = new String[]{Media.BUCKET_ID, Media.BUCKET_DISPLAY_NAME};
         Cursor bucketCursor = null;
         try {
-            bucketCursor = cr.query(Media.EXTERNAL_CONTENT_URI, distinctBucketColumns, "0==0)" + " GROUP BY(" + Media.BUCKET_ID, null,
+            bucketCursor = cr.query(Media.EXTERNAL_CONTENT_URI, distinctBucketColumns, null, null,
                     Media.DATE_MODIFIED + " desc");
+            HashSet<HashMap<String, String>> hashSet = new HashSet<>();
             if (bucketCursor != null && bucketCursor.moveToFirst()) {
                 do {
                     String buckId = bucketCursor.getString(bucketCursor.getColumnIndex(Media.BUCKET_ID));
                     String name = bucketCursor.getString(bucketCursor.getColumnIndex(Media.BUCKET_DISPLAY_NAME));
-                    AlbumEntity album = buildAlbumInfo(name, buckId);
                     if (!TextUtils.isEmpty(buckId)) {
-                        buildAlbumCover(cr, buckId, album);
-                    }
+                        HashMap<String, String> map = new HashMap<>(2);
+                        map.put("buckId", buckId);
+                        map.put("name", name);
+                        hashSet.add(map);
+                     }
                 } while (bucketCursor.moveToNext() && !bucketCursor.isLast());
+
+                for (HashMap<String, String> map : hashSet) {
+                    AlbumEntity album = buildAlbumInfo(map.get("name"), map.get("buckId"));
+                    if (!TextUtils.isEmpty(map.get("buckId"))) {
+                        buildAlbumCover(cr, map.get("buckId"), album);
+                    }
+                }
             }
         } finally {
             if (bucketCursor != null) {
@@ -106,7 +118,7 @@ public class AlbumTask {
         String[] selectionArgs = new String[args.length + 1];
         selectionArgs[0] = buckId;
         for (int i = 1; i < selectionArgs.length; i++) {
-            selectionArgs[i] = args[i-1];
+            selectionArgs[i] = args[i - 1];
         }
         Cursor coverCursor = cr.query(Media.EXTERNAL_CONTENT_URI, photoColumn, selectionId,
                 selectionArgs, Media.DATE_MODIFIED + " desc");
